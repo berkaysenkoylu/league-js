@@ -1,0 +1,134 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+/*
+color-primary: #7ed56f
+color-primary-light: #55c57a;
+color-primary-dark: #28b485; 
+*/
+
+.banner {
+    width: 100%;
+    height: 5rem;
+    background-image: linear-gradient(to bottom left, #7ed56f, #55c57a);
+    -webkit-background-image: linear-gradient(to bottom left, #7ed56f, #55c57a);
+    /* background-color: #7ed56f; */
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.banner-logo {
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #166349;
+}
+
+.main {
+    margin: 1rem;
+}
+
+.league-standing,
+.fixture,
+.probability {
+    width: 70%;
+    margin: 0 auto;
+    padding: 2rem;
+    -webkit-box-shadow: 0rem 0.4rem 0.5rem 0.5rem rgba(0,0,0,0.25);
+    -moz-box-shadow: 0rem 0.4rem 0.5rem 0.5rem rgba(0,0,0,0.25);
+    box-shadow: 0rem 0.4rem 0.5rem 0.5rem rgba(0,0,0,0.25);
+}
+
+.main > *:not(:last-child) {
+    margin-bottom: 3rem;
+}
+
+.header-primary {
+    margin-bottom: 1.5rem;
+}
+
+.header-primary h2 {
+    text-align: center;
+    font-size: 2rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+table {
+    border-collapse: collapse;
+    width: 70%;
+    margin: 0 auto;
+}
+  
+td, th {
+    border: 1px solid #28b485;
+    text-align: left;
+    padding: 8px;
+}
+  
+tr:nth-child(even) {
+    background-color: rgba(85, 197, 122, 0.15);
+}
+
+.probability {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#prob-table {
+    margin-bottom: 1rem;
+    /* border-bottom: 1px solid rgba(0, 0, 0, 0.2); */
+}
+
+#piechart {
+    width: 400px;
+}
+
+.fixture-row {
+    display: flex;
+    align-items: center;
+    font-size: 1.6rem;
+    padding: 1.5rem 0;
+}
+
+.fixture-row:not(:last-child) {
+    margin-bottom: 1.5rem;
+}
+
+.fixture-week {
+    width: 5rem;
+    margin-right: 2rem;
+    text-align: center;
+    line-height: 1.6rem;
+}
+
+.fixture-match {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.played-match {
+    font-weight: 600;
+}
+
+svg > g > g:last-child { pointer-events: none }
