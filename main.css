@@ -71,6 +71,10 @@ color-primary-dark: #28b485;
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 }
 
+#league-table {
+    font-size: 1.2rem;
+}
+
 table {
     border-collapse: collapse;
     width: 70%;
@@ -88,13 +92,24 @@ tr:nth-child(even) {
 }
 
 .probability {
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
     align-items: center;
+
+    display: none;
+}
+
+.probability-shown {
+    display: flex;
+}
+
+.probability header {
+    width: 100%;
 }
 
 #prob-table {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
+    width: 70%;
     /* border-bottom: 1px solid rgba(0, 0, 0, 0.2); */
 }
 
@@ -129,6 +144,29 @@ tr:nth-child(even) {
 
 .played-match {
     font-weight: 600;
+    color: #205342;
 }
 
 svg > g > g:last-child { pointer-events: none }
+
+.league-controls {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.league-controls button {
+    all: unset;
+    box-sizing: inherit;
+    cursor: pointer;
+    padding: 1rem 2rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    background-color: #1d8361;
+    color: #fff;
+}
+
+.league-controls button:not(:last-child) {
+    margin-right: 1rem;
+}

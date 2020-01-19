@@ -2,6 +2,8 @@ const BACKEND_URL = 'http://localhost:8000/api/';
 
 let leagueTableElement = document.getElementById('league-table');
 let fixtureElement = document.getElementById('fixture-body');
+let probabilityTableElement = document.getElementById('prob-table');
+let probabilitySection = document.getElementById('probability');
 
 // CTA
 let nextWeekButton = document.getElementById('next-week-button');
@@ -121,7 +123,27 @@ nextWeekButton.addEventListener('click', async () => {
         }
     });
 
+    if(week-1 >= 4 && week-1 < 6) {
+        probabilitySection.classList.add('probability-shown');
 
+        let obj = {
+            ...data
+        }
+        probabilities = calculateProbabilities(obj);
+
+        drawChart(probabilities);
+
+        // Display data in a tabular fashion
+        drawProbabilityData();
+    }
+    else if (week === 7) {
+        probabilitySection.classList.add('probability-shown');
+    
+        drawChart(probabilities);
+
+        // Display data in a tabular fashion
+        drawProbabilityData();
+    }
 
     let teamData = preProcessTeamData(sortedTeamData);
     createTable(teamData, leagueTableElement);
@@ -193,6 +215,28 @@ function fetchData() {
         });
     
 
+        if(week-1 >= 4 && week-1 < 6) {
+            probabilitySection.classList.add('probability-shown');
+
+            let obj = {
+                ...response
+            }
+            probabilities = calculateProbabilities(obj);
+            
+            drawChart(probabilities);
+
+            // Display data in a tabular fashion
+            drawProbabilityData();
+        }
+        else if (week === 7) {
+            probabilitySection.classList.add('probability-shown');
+
+            // Display chart at the end as well
+            drawChart(probabilities);
+
+            // Display data in a tabular fashion
+            drawProbabilityData();
+        }
 
         let teamData = preProcessTeamData(sortedTeamData);
         createTable(teamData, leagueTableElement);
@@ -209,6 +253,91 @@ function resetFields() {
     // let tableData = document.getElementById('league-table');
     while (leagueTableElement.firstChild) leagueTableElement.removeChild(leagueTableElement.firstChild);
 
+    while (probabilityTableElement.firstChild) probabilityTableElement.removeChild(probabilityTableElement.firstChild)
 
+    let chartData = document.getElementById('piechart');
+    while (chartData.firstChild) chartData.removeChild(chartData.firstChild);
+
+    probabilitySection.classList.remove('probability-shown');
 }
 
+// PROBABILITY CALCULATION
+function calculateProbabilities(leagueData) {
+    // Deep copy the data (Immutable)
+    const data = {...leagueData};
+    const copiedData = {...data.league};
+    const copiedLeagueData = copiedData.teams.map(team => {
+        return {
+            team: { ...team.team },
+            ...team
+        }
+    });
+    const copiedFixtureData = [...copiedData.fixture];
+
+    // How many times simulation will run
+    let epoch = 10000;
+
+    // Store the amount a team winning the league
+    let teamWinCounts = {};
+    copiedLeagueData.forEach(team => {
+        teamWinCounts[team.team.name] = 0;
+    });
+
+    // Week number
+    let weekNumber = copiedData.week;
+
+    // Simulation
+    while(epoch > 0) {
+        let week = weekNumber;
+        // Deep copy again (otherwise, one can mutate the original data)
+        let leagueDataCopy = copiedLeagueData.map(team => {
+            return {
+                team: { ...team.team },
+                ...team
+            }
+        });
+
+        // Simulate matches here
+        while(week <= 6) {
+            let weekFixture = copiedFixtureData.filter(match => match.weekNumber === week);
+
+            let playedFixture = playWeek(weekFixture);
+
+            let newLeagueData = updateLeagueData(leagueDataCopy, playedFixture);
+
+            leagueDataCopy = newLeagueData;
+            
+            week++;
+        }
+
+        // Sort the simulated league table
+        let sortedTeamData = leagueDataCopy.sort((a, b) => {
+            if(a.points === b.points) {
+                return ((a.gs - a.gc) > (b.gs - b.gc)) ? 1 : -1;
+            }
+            else {
+                return a.points > b.points ? -1 : 1;
+            }
+        });
+
+        // Get the 1st place, and increment its win count in the object
+        teamWinCounts[sortedTeamData[0].team.name] += 1;
+
+        // Decrease the epoch
+        epoch--;
+    }
+
+    return teamWinCounts;
+}
+
+function drawProbabilityData() {
+    // Display data in a tabular fashion
+    let data = Object.keys(probabilities).map(team => {
+        return {
+            team: team,
+            probability: +(probabilities[team] / 10000 * 100).toFixed(2)
+        }
+    });
+
+    createTable(data.sort((a,b) => a.probability >= b.probability ? -1 : 1), probabilityTableElement);
+}
