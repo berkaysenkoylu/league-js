@@ -1,4 +1,4 @@
-const BACKEND_URL = 'http://localhost:8000/api/';
+const BACKEND_URL = 'https://stormy-stream-67607.herokuapp.com/api/';
 
 let leagueTableElement = document.getElementById('league-table');
 let fixtureElement = document.getElementById('fixture-body');
