@@ -17,5 +17,5 @@ Working Demo: [league-js](https://berkaysenkoylu.github.io/league-js/)
 - <h3>Get probabilities and display them after week 4</h3>
 <img src="https://drive.google.com/uc?export=view&id=1UKT32x6QPozplLHqCb4ANAhoAYcHbDcv" style="width: 500px; max-width: 100%; height: auto"/>
 
-- <h3>League standing and Fixture</h3>
+- <h3>League standing and probabilities at the 5th week</h3>
 <img src="https://drive.google.com/uc?export=view&id=1hDZgZSjvX9L-mom529NqAVrY08LwUIyq" style="width: 500px; max-width: 100%; height: auto"/>
