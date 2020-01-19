@@ -123,7 +123,7 @@ nextWeekButton.addEventListener('click', async () => {
         }
     });
 
-    if(week-1 >= 4 && week-1 < 6) {
+    if(week-1 >= 4 && week-1 <= 6) {
         probabilitySection.classList.add('probability-shown');
 
         let obj = {
@@ -136,14 +136,14 @@ nextWeekButton.addEventListener('click', async () => {
         // Display data in a tabular fashion
         drawProbabilityData();
     }
-    else if (week === 7) {
-        probabilitySection.classList.add('probability-shown');
+    // else if (week === 7) {
+    //     probabilitySection.classList.add('probability-shown');
     
-        drawChart(probabilities);
+    //     drawChart(probabilities);
 
-        // Display data in a tabular fashion
-        drawProbabilityData();
-    }
+    //     // Display data in a tabular fashion
+    //     drawProbabilityData();
+    // }
 
     let teamData = preProcessTeamData(sortedTeamData);
     createTable(teamData, leagueTableElement);
@@ -215,7 +215,7 @@ function fetchData() {
         });
     
 
-        if(week-1 >= 4 && week-1 < 6) {
+        if(week-1 >= 4 && week-1 <= 6) {
             probabilitySection.classList.add('probability-shown');
 
             let obj = {
@@ -228,15 +228,15 @@ function fetchData() {
             // Display data in a tabular fashion
             drawProbabilityData();
         }
-        else if (week === 7) {
-            probabilitySection.classList.add('probability-shown');
+        // else if (week === 7) {
+        //     probabilitySection.classList.add('probability-shown');
 
-            // Display chart at the end as well
-            drawChart(probabilities);
+        //     // Display chart at the end as well
+        //     drawChart(probabilities);
 
-            // Display data in a tabular fashion
-            drawProbabilityData();
-        }
+        //     // Display data in a tabular fashion
+        //     drawProbabilityData();
+        // }
 
         let teamData = preProcessTeamData(sortedTeamData);
         createTable(teamData, leagueTableElement);
